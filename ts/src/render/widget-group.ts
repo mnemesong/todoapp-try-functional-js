@@ -1,0 +1,1 @@
+export type T = Record<string, string[]>
