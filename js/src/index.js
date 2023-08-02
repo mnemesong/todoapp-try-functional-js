@@ -23,8 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.todo = exports.render = exports.app = exports.abstracts = void 0;
+exports.testReliz = exports.todo = exports.render = exports.app = exports.abstracts = void 0;
 exports.abstracts = __importStar(require("./abstracts"));
 exports.app = __importStar(require("./app"));
 exports.render = __importStar(require("./render"));
 exports.todo = __importStar(require("./todo-domain"));
+exports.testReliz = __importStar(require("./test-reliz"));
