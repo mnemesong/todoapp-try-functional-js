@@ -1,4 +1,4 @@
-import * as todo from "../../todo"
+import * as todo from "../../todo-domain"
 import * as abstr from "../../abstracts"
 import {v4 as uuid} from "uuid"
 
@@ -11,7 +11,7 @@ export const createNew = (name: string): T => ({
 
 export const toTodoResponsible = (
     t: T, 
-    tasks: todo.task.T[] = []
+    tasks: todo.resp.task.T[] = []
 ): todo.resp.T => ({
     id: t.id,
     name: t.name,

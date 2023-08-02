@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var app = __importStar(require("../src/app"));
+var src = __importStar(require("../src"));
 var mocha_1 = require("mocha");
 var assert = __importStar(require("assert"));
 (0, mocha_1.describe)("test app realization", function () {
@@ -35,17 +35,44 @@ var assert = __importStar(require("assert"));
         });
         var renderTemplate = function (resps, form) { return "<app>".concat(resps).concat(form, "</app>"); };
         var template = renderTemplate('', '');
-        var state = app.records.state.init();
+        var state = ({
+            resps: [
+                { id: "34e96a3e-dfad-412c-93a2-125f8697750b", name: "Mary" },
+                { id: "6d4c7b04-bcce-4309-804c-b5337a5f760a", name: "John" },
+            ],
+            tasks: [
+                {
+                    id: "eccdcf42-2521-4e7d-8991-41ea50274c51",
+                    resId: "34e96a3e-dfad-412c-93a2-125f8697750b",
+                    name: "Kiss the cat",
+                    isReady: false,
+                },
+                {
+                    id: "ef43d0b0-5226-441f-96f9-fa574caa5b9f",
+                    resId: "34e96a3e-dfad-412c-93a2-125f8697750b",
+                    name: "Buy the milk",
+                    isReady: true,
+                },
+                {
+                    id: "ef176caf-f06c-4535-bf55-f1891dac00a0",
+                    resId: "6d4c7b04-bcce-4309-804c-b5337a5f760a",
+                    name: "Found the home",
+                    isReady: false,
+                },
+            ],
+            form: {
+                name: "",
+                responsibleId: "6d4c7b04-bcce-4309-804c-b5337a5f760a"
+            }
+        });
         var rerender = function () {
-            state = app.records.state.updateEventHistory(state);
-            var _a = app.mappers.render.toRender(state.store, renderConfig), resps = _a.resps, form = _a.form;
+            var _a = src.app.appToRender
+                .toRender(state, renderConfig), resps = _a.resps, form = _a.form;
             template = renderTemplate(resps, form);
         };
-        var addEvent = function (e) {
-            state.history = app.records.history.addEvent(state.history, e);
-        };
-        state.store.form.name = "ababa";
-        addEvent(app.events.applyForm.create());
+        state.form.name = "ababa";
+        state = src.app.applyForm(state);
+        state = src.app.switchTask(state, "ef176caf-f06c-4535-bf55-f1891dac00a0");
         rerender();
         assert.strictEqual(template, '<app>'
             + '<resp name="Mary">'
@@ -53,7 +80,7 @@ var assert = __importStar(require("assert"));
             + '<task name="Buy the milk" ready="true">'
             + '</resp>'
             + '<resp name="John">'
-            + '<task name="Found the home" ready="false">'
+            + '<task name="Found the home" ready="true">'
             + '<task name="ababa" ready="false">'
             + '</resp>'
             + '<form name="">'

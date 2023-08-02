@@ -1,13 +1,12 @@
-import * as app from "../src/app"
+import * as src from "../src"
 import { describe, it } from "mocha"
-import * as abstr from "../src/abstracts"
 import * as assert from "assert"
 
 describe("test app realization", () =>
 {
     it("test 1", () => 
     {
-        const renderConfig: app.mappers.render.RenderConfig = ({
+        const renderConfig: src.app.appToRender.RenderConfig = ({
             taskRender: (m) => `<task name="${m.name}" ready="${m.isReady}">`,
             respRender: (m, t) => `<resp name="${m.name}">${t}</resp>`,
             formRender: (m) => `<form name="${m.name}">`
@@ -17,22 +16,46 @@ describe("test app realization", () =>
 
         let template = renderTemplate('', '')
         
-        let state: app.records.state.T = app.records.state.init()
+        let state: src.app.T = ({
+            resps: [
+                {id: "34e96a3e-dfad-412c-93a2-125f8697750b", name: "Mary"},
+                {id: "6d4c7b04-bcce-4309-804c-b5337a5f760a", name: "John"},
+            ],
+            tasks: [
+                {
+                    id: "eccdcf42-2521-4e7d-8991-41ea50274c51",
+                    resId: "34e96a3e-dfad-412c-93a2-125f8697750b",
+                    name: "Kiss the cat",
+                    isReady: false,
+                },
+                {
+                    id: "ef43d0b0-5226-441f-96f9-fa574caa5b9f",
+                    resId: "34e96a3e-dfad-412c-93a2-125f8697750b",
+                    name: "Buy the milk",
+                    isReady: true,
+                },
+                {
+                    id: "ef176caf-f06c-4535-bf55-f1891dac00a0",
+                    resId: "6d4c7b04-bcce-4309-804c-b5337a5f760a",
+                    name: "Found the home",
+                    isReady: false,
+                },
+            ],
+            form: {
+                name: "",
+                responsibleId: "6d4c7b04-bcce-4309-804c-b5337a5f760a"
+            }
+        })
 
         const rerender = () => {
-            state = app.records.state.updateEventHistory(state)
-            const {resps, form} = app.mappers.render.toRender(state.store, renderConfig)
+            const {resps, form} = src.app.appToRender
+                .toRender(state, renderConfig)
             template = renderTemplate(resps, form)
         }
 
-        const addEvent = (
-            e: abstr.event.T<typeof app.records.history.eventNames[number], any>
-        ) => {
-            state.history = app.records.history.addEvent(state.history, e)
-        }
-
-        state.store.form.name = "ababa"
-        addEvent(app.events.applyForm.create())
+        state.form.name = "ababa"
+        state = src.app.applyForm(state)
+        state = src.app.switchTask(state, "ef176caf-f06c-4535-bf55-f1891dac00a0")
         rerender()
 
         assert.strictEqual(template, '<app>' 
@@ -41,7 +64,7 @@ describe("test app realization", () =>
                     + '<task name="Buy the milk" ready="true">' 
                 + '</resp>' 
                 + '<resp name="John">' 
-                    + '<task name="Found the home" ready="false">' 
+                    + '<task name="Found the home" ready="true">' 
                     + '<task name="ababa" ready="false">' 
                 + '</resp>' 
                 + '<form name="">' 

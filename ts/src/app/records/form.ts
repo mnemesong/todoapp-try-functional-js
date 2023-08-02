@@ -1,3 +1,3 @@
-import * as todo from "../../todo"
+import * as todo from "../../todo-domain"
 
 export type T = todo.form.T
