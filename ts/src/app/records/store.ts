@@ -16,7 +16,7 @@ export const evalApplyForm = (t: T, e: events.applyForm.T): T => mappers
 export const evalSwitchTask = (t: T, e: events.switchTask.T): T => mappers
     .todo.inContextOfTodo(t, (app) => todo.app.switchTasks(app, [e[1].id]))
 
-export const evalEvent = (t: T, e: abstracts.event.rec.T<string, any>) => {
+export const evalEvent = (t: T, e: abstracts.event.T<string, any>) => {
     if(events.applyForm.isValid(e)) {
         return evalApplyForm(t, e as events.applyForm.T)
     } else if(events.switchTask.isValid(e)) {

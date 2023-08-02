@@ -2,7 +2,7 @@ import * as todo from "../../todo"
 import * as abstr from "../../abstracts"
 import {v4 as uuid} from "uuid"
 
-export type T = abstr.table.record.T<Omit<todo.resp.T, 'tasks'>>
+export type T = abstr.record.T<Omit<todo.resp.T, 'tasks'>>
 
 export const createNew = (name: string): T => ({
     id: uuid(),

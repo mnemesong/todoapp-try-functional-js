@@ -1,5 +1,5 @@
 import * as todo from "../../todo";
-import * as rec from "../../abstracts/table/record";
+import * as rec from "../../abstracts/record";
 export type T = rec.T<todo.task.T & {
     resId: string;
 }>;

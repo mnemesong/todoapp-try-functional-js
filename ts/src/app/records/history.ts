@@ -8,7 +8,7 @@ export const eventNames = tuple(events.applyForm.e, events.switchTask.e)
 export type Event = events.applyForm.T | events.switchTask.T
 
 export type T = {
-    events: abstr.event.rec.T<typeof eventNames[number], any>[],
+    events: abstr.event.T<typeof eventNames[number], any>[],
     lastEvent: number,
 }
 

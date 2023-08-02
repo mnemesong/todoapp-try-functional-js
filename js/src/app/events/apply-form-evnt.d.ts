@@ -1,4 +1,4 @@
-import * as event from "../../abstracts/event/rec";
+import * as event from "../../abstracts/event";
 export declare const e = "apply-form";
 export type T = event.T<typeof e, null>;
 export declare const create: () => T;

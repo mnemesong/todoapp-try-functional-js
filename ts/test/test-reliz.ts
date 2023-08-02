@@ -26,7 +26,7 @@ describe("test app realization", () =>
         }
 
         const addEvent = (
-            e: abstr.event.rec.T<typeof app.records.history.eventNames[number], any>
+            e: abstr.event.T<typeof app.records.history.eventNames[number], any>
         ) => {
             state.history = app.records.history.addEvent(state.history, e)
         }

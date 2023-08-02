@@ -1,5 +1,4 @@
 import * as records from "../records"
-import * as abstr from "../../abstracts"
 import * as render from "../../render"
 
 export type RenderConfig = {

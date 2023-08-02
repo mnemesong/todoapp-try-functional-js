@@ -47,6 +47,16 @@ var assert = __importStar(require("assert"));
         state.store.form.name = "ababa";
         addEvent(app.events.applyForm.create());
         rerender();
-        assert.strictEqual(template, '');
+        assert.strictEqual(template, '<app>'
+            + '<resp name="Mary">'
+            + '<task name="Kiss the cat" ready="false">'
+            + '<task name="Buy the milk" ready="true">'
+            + '</resp>'
+            + '<resp name="John">'
+            + '<task name="Found the home" ready="false">'
+            + '<task name="ababa" ready="false">'
+            + '</resp>'
+            + '<form name="">'
+            + '</app>');
     });
 });

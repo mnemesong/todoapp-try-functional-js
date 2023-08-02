@@ -23,9 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.table = exports.scalar = exports.render = exports.mutable = exports.event = void 0;
+exports.record = exports.scalar = exports.event = void 0;
 exports.event = __importStar(require("./abstracts/event"));
-exports.mutable = __importStar(require("./abstracts/mutable"));
-exports.render = __importStar(require("./abstracts/render"));
 exports.scalar = __importStar(require("./abstracts/scalar"));
-exports.table = __importStar(require("./abstracts/table"));
+exports.record = __importStar(require("./abstracts/record"));

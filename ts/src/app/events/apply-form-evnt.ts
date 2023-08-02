@@ -1,4 +1,4 @@
-import * as event from "../../abstracts/event/rec"
+import * as event from "../../abstracts/event"
 
 export const e = 'apply-form'
 
