@@ -3,16 +3,18 @@ import * as abstr from "../../abstracts"
 import * as render from "../../render"
 
 export type RenderConfig = {
-    task: abstr.render.config.T<records.task.T>,
-    resp: abstr.render.config.T<records.resp.T>,
-    form: abstr.render.config.T<records.form.T>,
+    taskRender: (m: records.task.T) => string,
+    respRender: (m: records.resp.T, tasks: string) => string,
+    formRender: (m: records.form.T) => string,
 }
 
 export const toRender = (
-    t: records.state.T, 
+    t: records.store.T, 
     config: RenderConfig
 ): render.state.T => ({
-    tasks: abstr.render.config.renderMany(config.task, t.tasks),
-    forms: abstr.render.config.renderMany(config.form, [t.form]),
-    resps: abstr.render.config.renderMany(config.resp, t.resps),
+    resps: t.resps.map(el => config.respRender(
+        el, 
+        t.tasks.filter(t => t.resId === el.id).map(t => config.taskRender(t)).join('')
+    )).join(''),
+    form: config.formRender(t.form),
 })

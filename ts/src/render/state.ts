@@ -1,7 +1,6 @@
-import * as widgetGroup from "./widget-group"
+import * as abstr from "../abstracts"
 
 export type T = {
-    tasks: widgetGroup.T,
-    resps: widgetGroup.T,
-    forms: widgetGroup.T,
+    resps: string,
+    form: string,
 }

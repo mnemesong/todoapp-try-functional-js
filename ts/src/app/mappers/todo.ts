@@ -1,7 +1,7 @@
 import * as todo from "../../todo"
 import * as records from "../records"
 
-export const toTodo = (t: records.state.T): todo.app.T => ({
+export const toTodo = (t: records.store.T): todo.app.T => ({
     responsibles: t.resps.map(r => ({
         id: r.id,
         name: r.name,
@@ -14,7 +14,7 @@ export const toTodo = (t: records.state.T): todo.app.T => ({
     form: t.form,
 })
 
-export const fromTodo = (t: todo.app.T): records.state.T => ({
+export const fromTodo = (t: todo.app.T): records.store.T => ({
     form: t.form,
     resps: t.responsibles.map(r => ({
         id: r.id,
@@ -32,6 +32,6 @@ export const fromTodo = (t: todo.app.T): records.state.T => ({
 })
 
 export const inContextOfTodo = (
-    t: records.state.T, 
+    t: records.store.T, 
     f: (app: todo.app.T) => todo.app.T
-): records.state.T => fromTodo(f(toTodo(t)))
+): records.store.T => fromTodo(f(toTodo(t)))
