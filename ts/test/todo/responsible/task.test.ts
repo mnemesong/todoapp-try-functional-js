@@ -8,17 +8,17 @@ describe("task.test", () =>
     {
         it("test 1", () =>
         {
-            const task: src.todo.resp.task.T = ({
+            const task: src.todoDomain.resp.task.T = ({
                 id: "sadasd",
                 isReady: true,
                 name: "Sense Chi"
             })
-            const nominal: src.todo.resp.task.T = ({
+            const nominal: src.todoDomain.resp.task.T = ({
                 id: "sadasd",
                 isReady: false,
                 name: "Sense Chi"
             })
-            assert.deepStrictEqual(src.todo.resp.task.switchTask(task), nominal)
+            assert.deepStrictEqual(src.todoDomain.resp.task.switchTask(task), nominal)
         })
     })
 })

@@ -59,7 +59,7 @@ var assert = __importStar(require("assert"));
                     responsibleId: ""
                 }
             });
-            assert.deepStrictEqual(src.todo.switchTasks(todo, ["sadasd"]), nominal);
+            assert.deepStrictEqual(src.todoDomain.switchTasks(todo, ["sadasd"]), nominal);
         });
     });
 });

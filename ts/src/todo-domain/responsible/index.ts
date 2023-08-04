@@ -1,15 +1,15 @@
-import * as taskR from "./task"
+import * as task from "./task"
 export * as task from "./task"
 
 export type T = {
     id: string,
     name: string,
-    tasks: taskR.T[]
+    tasks: task.T[]
 }
 
 export const clone = (u: T) => ({...u})
 
-export const withNewTask = (t: T, task: taskR.T) => ({
+export const withNewTask = (t: T, task: task.T) => ({
     id: t.id,
     name: t.name,
     tasks: [...t.tasks, task]
@@ -18,7 +18,7 @@ export const withNewTask = (t: T, task: taskR.T) => ({
 export const switchTask = (t: T, taskId: string) => ({
     id: t.id,
     name: t.name,
-    tasks: t.tasks.map(el => (el.id === taskId) ? taskR.switchTask(el) : el)
+    tasks: t.tasks.map(el => (el.id === taskId) ? task.switchTask(el) : el)
 })
 
 export const switchManyTasks = (t: T, taskIds: string[]) => taskIds

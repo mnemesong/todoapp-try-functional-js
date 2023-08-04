@@ -44,7 +44,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.switchManyTasks = exports.switchTask = exports.withNewTask = exports.clone = exports.task = void 0;
-var taskR = __importStar(require("./task"));
+var task = __importStar(require("./task"));
 exports.task = __importStar(require("./task"));
 var clone = function (u) { return (__assign({}, u)); };
 exports.clone = clone;
@@ -57,7 +57,7 @@ exports.withNewTask = withNewTask;
 var switchTask = function (t, taskId) { return ({
     id: t.id,
     name: t.name,
-    tasks: t.tasks.map(function (el) { return (el.id === taskId) ? taskR.switchTask(el) : el; })
+    tasks: t.tasks.map(function (el) { return (el.id === taskId) ? task.switchTask(el) : el; })
 }); };
 exports.switchTask = switchTask;
 var switchManyTasks = function (t, taskIds) { return taskIds

@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.switchTasks = exports.applyForm = exports.form = exports.resp = void 0;
+exports.init = exports.withFormData = exports.switchTasks = exports.applyForm = exports.form = exports.resp = void 0;
 var assert_1 = __importDefault(require("assert"));
 var formR = __importStar(require("./form/index"));
 var responsibleR = __importStar(require("./responsible/index"));
@@ -56,3 +56,44 @@ var switchTasks = function (t, taskIds) {
     };
 };
 exports.switchTasks = switchTasks;
+var withFormData = function (t, name, resId) { return ({
+    responsibles: t.responsibles,
+    form: { name: name, responsibleId: resId }
+}); };
+exports.withFormData = withFormData;
+var init = function () { return ({
+    responsibles: [
+        {
+            id: "34e96a3e-dfad-412c-93a2-125f8697750b",
+            name: "Mary",
+            tasks: [
+                {
+                    id: "eccdcf42-2521-4e7d-8991-41ea50274c51",
+                    name: "Kiss the cat",
+                    isReady: false,
+                },
+                {
+                    id: "ef43d0b0-5226-441f-96f9-fa574caa5b9f",
+                    name: "Buy the milk",
+                    isReady: true,
+                },
+            ]
+        },
+        {
+            id: "6d4c7b04-bcce-4309-804c-b5337a5f760a",
+            name: "John",
+            tasks: [
+                {
+                    id: "ef176caf-f06c-4535-bf55-f1891dac00a0",
+                    name: "Found the home",
+                    isReady: false,
+                },
+            ]
+        },
+    ],
+    form: {
+        name: "",
+        responsibleId: "6d4c7b04-bcce-4309-804c-b5337a5f760a"
+    }
+}); };
+exports.init = init;

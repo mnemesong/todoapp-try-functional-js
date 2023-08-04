@@ -23,7 +23,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.todoSaver = exports.todoRender = exports.todoDomain = void 0;
-exports.todoDomain = __importStar(require("./todo-domain"));
-exports.todoRender = __importStar(require("./$todo-render"));
-exports.todoSaver = __importStar(require("./$todo-saver"));
+exports.$getTodo = exports.$saveTodo = void 0;
+var assert = __importStar(require("assert"));
+var state = {
+    s: null
+};
+var $saveTodo = function (todo) {
+    state.s = todo;
+};
+exports.$saveTodo = $saveTodo;
+var $getTodo = function () {
+    assert.ok(state.s !== null);
+    return state.s;
+};
+exports.$getTodo = $getTodo;

@@ -1,46 +1,46 @@
 require=(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toRender = void 0;
-var toRender = function (t, config) { return ({
-    resps: t.resps.map(function (el) { return config.respRender(el, t.tasks.filter(function (t) { return t.resId === el.id; }).map(function (t) { return config.taskRender(t); }).join('')); }).join(''),
-    form: config.formRender(t.form),
+exports.prepare = exports.widgets = void 0;
+exports.widgets = __importStar(require("./widgets"));
+var widgets = __importStar(require("./widgets"));
+var prepare = function (t) { return ({
+    resps: t.responsibles.map(function (r) { return widgets.resp.render(r, r.tasks.map(function (t) { return widgets.task.render(t); }).join('')); }).join(''),
+    form: widgets.form.render(t.form),
 }); };
-exports.toRender = toRender;
+exports.prepare = prepare;
 
-},{}],2:[function(require,module,exports){
+},{"./widgets":3}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.inContextOfTodo = exports.fromTodo = exports.toTodo = void 0;
-var toTodo = function (t) { return ({
-    responsibles: t.resps.map(function (r) { return ({
-        id: r.id,
-        name: r.name,
-        tasks: t.tasks.filter(function (t) { return t.resId === r.id; }).map(function (t) { return ({
-            id: t.id,
-            name: t.name,
-            isReady: t.isReady
-        }); })
-    }); }),
-    form: t.form,
-}); };
-exports.toTodo = toTodo;
-var fromTodo = function (t) { return ({
-    form: t.form,
-    resps: t.responsibles.map(function (r) { return ({
-        id: r.id,
-        name: r.name,
-    }); }),
-    tasks: t.responsibles.reduce(function (acc, el) { return acc.concat(el.tasks.map(function (t) { return ({
-        id: t.id,
-        name: t.name,
-        isReady: t.isReady,
-        resId: el.id
-    }); })); }, [])
-}); };
-exports.fromTodo = fromTodo;
-var inContextOfTodo = function (t, f) { return (0, exports.fromTodo)(f((0, exports.toTodo)(t))); };
-exports.inContextOfTodo = inContextOfTodo;
+exports.render = void 0;
+var render = function (f) {
+    return "\n    <div id=\"form-cont\">\n        <input type=\"text\" value=\"".concat(f.name, "\" id=\"form-input\">\n        <button type=\"button\" id=\"submit-btn\">Submit</button>\n    </div>");
+};
+exports.render = render;
 
 },{}],3:[function(require,module,exports){
 "use strict";
@@ -68,26 +68,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.render = exports.switchTask = exports.applyForm = exports.appToTodo = exports.appToRender = exports.records = void 0;
-var todo = __importStar(require("../todo-domain"));
-var mapTodo = __importStar(require("./app-to-todo"));
-var mapRender = __importStar(require("./app-to-render"));
-exports.records = __importStar(require("./records"));
-exports.appToRender = __importStar(require("./app-to-render"));
-exports.appToTodo = __importStar(require("./app-to-todo"));
-var applyForm = function (t) { return mapTodo
-    .inContextOfTodo(t, function (app) { return todo.applyForm(app); }); };
-exports.applyForm = applyForm;
-var switchTask = function (t, taskId) { return mapTodo
-    .inContextOfTodo(t, function (app) { return todo.switchTasks(app, [taskId]); }); };
-exports.switchTask = switchTask;
-exports.render = mapRender.toRender;
+exports.task = exports.resp = exports.form = void 0;
+exports.form = __importStar(require("./form-widget"));
+exports.resp = __importStar(require("./resp-widget"));
+exports.task = __importStar(require("./task-widget"));
 
-},{"../todo-domain":9,"./app-to-render":1,"./app-to-todo":2,"./records":5}],4:[function(require,module,exports){
+},{"./form-widget":2,"./resp-widget":4,"./task-widget":5}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.render = void 0;
+var render = function (resp, tasks) { return "\n<ol id=\"resp-".concat(resp.id, "\">\n    <li>").concat(resp.name, "</li>\n    <ol>").concat(tasks, "</ol>\n</ol>"); };
+exports.render = render;
 
 },{}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.render = void 0;
+var render = function (task) {
+    return "\n    <li id=\"task-".concat(task.id, "\">").concat(task.isReady ? "<b>".concat(task.name, "</b>") : task.name, "</li>");
+};
+exports.render = render;
+
+},{}],6:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -113,45 +115,53 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.task = exports.resp = exports.form = void 0;
-exports.form = __importStar(require("./form"));
-exports.resp = __importStar(require("./responsible"));
-exports.task = __importStar(require("./task"));
-
-},{"./form":4,"./responsible":6,"./task":7}],6:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.toTodoResponsible = exports.createNew = void 0;
-var uuid_1 = require("uuid");
-var createNew = function (name) { return ({
-    id: (0, uuid_1.v4)(),
-    name: name,
-}); };
-exports.createNew = createNew;
-var toTodoResponsible = function (t, tasks) {
-    if (tasks === void 0) { tasks = []; }
-    return ({
-        id: t.id,
-        name: t.name,
-        tasks: tasks,
-    });
+exports.$getTodo = exports.$saveTodo = void 0;
+var assert = __importStar(require("assert"));
+var state = {
+    s: null
 };
-exports.toTodoResponsible = toTodoResponsible;
+var $saveTodo = function (todo) {
+    state.s = todo;
+};
+exports.$saveTodo = $saveTodo;
+var $getTodo = function () {
+    assert.ok(state.s !== null);
+    return state.s;
+};
+exports.$getTodo = $getTodo;
 
-},{"uuid":18}],7:[function(require,module,exports){
+},{"assert":12}],7:[function(require,module,exports){
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNew = void 0;
-var uuid_1 = require("uuid");
-var createNew = function (name, resId) { return ({
-    id: (0, uuid_1.v4)(),
-    name: name,
-    isReady: false,
-    resId: resId
-}); };
-exports.createNew = createNew;
+exports.todoSaver = exports.todoRender = exports.todoDomain = void 0;
+exports.todoDomain = __importStar(require("./todo-domain"));
+exports.todoRender = __importStar(require("./$todo-render"));
+exports.todoSaver = __importStar(require("./$todo-saver"));
 
-},{"uuid":18}],8:[function(require,module,exports){
+},{"./$todo-render":1,"./$todo-saver":6,"./todo-domain":9}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.construct = exports.clone = void 0;
@@ -189,7 +199,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.switchTasks = exports.applyForm = exports.form = exports.resp = void 0;
+exports.init = exports.withFormData = exports.switchTasks = exports.applyForm = exports.form = exports.resp = void 0;
 var assert_1 = __importDefault(require("assert"));
 var formR = __importStar(require("./form/index"));
 var responsibleR = __importStar(require("./responsible/index"));
@@ -219,6 +229,47 @@ var switchTasks = function (t, taskIds) {
     };
 };
 exports.switchTasks = switchTasks;
+var withFormData = function (t, name, resId) { return ({
+    responsibles: t.responsibles,
+    form: { name: name, responsibleId: resId }
+}); };
+exports.withFormData = withFormData;
+var init = function () { return ({
+    responsibles: [
+        {
+            id: "34e96a3e-dfad-412c-93a2-125f8697750b",
+            name: "Mary",
+            tasks: [
+                {
+                    id: "eccdcf42-2521-4e7d-8991-41ea50274c51",
+                    name: "Kiss the cat",
+                    isReady: false,
+                },
+                {
+                    id: "ef43d0b0-5226-441f-96f9-fa574caa5b9f",
+                    name: "Buy the milk",
+                    isReady: true,
+                },
+            ]
+        },
+        {
+            id: "6d4c7b04-bcce-4309-804c-b5337a5f760a",
+            name: "John",
+            tasks: [
+                {
+                    id: "ef176caf-f06c-4535-bf55-f1891dac00a0",
+                    name: "Found the home",
+                    isReady: false,
+                },
+            ]
+        },
+    ],
+    form: {
+        name: "",
+        responsibleId: "6d4c7b04-bcce-4309-804c-b5337a5f760a"
+    }
+}); };
+exports.init = init;
 
 },{"./form/index":8,"./responsible/index":10,"assert":12,"uuid":18}],10:[function(require,module,exports){
 "use strict";
@@ -267,7 +318,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.switchManyTasks = exports.switchTask = exports.withNewTask = exports.clone = exports.task = void 0;
-var taskR = __importStar(require("./task"));
+var task = __importStar(require("./task"));
 exports.task = __importStar(require("./task"));
 var clone = function (u) { return (__assign({}, u)); };
 exports.clone = clone;
@@ -280,7 +331,7 @@ exports.withNewTask = withNewTask;
 var switchTask = function (t, taskId) { return ({
     id: t.id,
     name: t.name,
-    tasks: t.tasks.map(function (el) { return (el.id === taskId) ? taskR.switchTask(el) : el; })
+    tasks: t.tasks.map(function (el) { return (el.id === taskId) ? task.switchTask(el) : el; })
 }); };
 exports.switchTask = switchTask;
 var switchManyTasks = function (t, taskIds) { return taskIds
@@ -2617,65 +2668,36 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.render = void 0;
-var app = __importStar(require("../app"));
-var todo = __importStar(require("../todo-domain"));
-var state = {
-    s: ({
-        resps: [
-            { id: "34e96a3e-dfad-412c-93a2-125f8697750b", name: "Mary" },
-            { id: "6d4c7b04-bcce-4309-804c-b5337a5f760a", name: "John" },
-        ],
-        tasks: [
-            {
-                id: "eccdcf42-2521-4e7d-8991-41ea50274c51",
-                resId: "34e96a3e-dfad-412c-93a2-125f8697750b",
-                name: "Kiss the cat",
-                isReady: false,
-            },
-            {
-                id: "ef43d0b0-5226-441f-96f9-fa574caa5b9f",
-                resId: "34e96a3e-dfad-412c-93a2-125f8697750b",
-                name: "Buy the milk",
-                isReady: true,
-            },
-            {
-                id: "ef176caf-f06c-4535-bf55-f1891dac00a0",
-                resId: "6d4c7b04-bcce-4309-804c-b5337a5f760a",
-                name: "Found the home",
-                isReady: false,
-            },
-        ],
-        form: {
-            name: "",
-            responsibleId: "6d4c7b04-bcce-4309-804c-b5337a5f760a"
-        }
-    })
-};
-var renderConfig = {
-    taskRender: function (m) { return "\n    <li id=\"task-".concat(m.id, "\">").concat(m.isReady ? "<b>".concat(m.name, "</b>") : m.name, "</li>"); },
-    respRender: function (r, t) { return "\n    <ol id=\"resp-".concat(r.id, "\">\n        <li>").concat(r.name, "</li>\n        <ol>").concat(t, "</ol>\n    </ol>"); },
-    formRender: function (f) { return "\n    <div id=\"form-cont\">\n        <input type=\"text\" value=\"".concat(f.name, "\" id=\"form-input\">\n        <button type=\"button\" id=\"submit-btn\">Submit</button>\n    </div>"); }
-};
+var src = __importStar(require("../src"));
+src.todoSaver.$saveTodo(src.todoDomain.init());
 var render = function () {
-    var renderResult = app.appToRender.toRender(state.s, renderConfig);
+    var renderResult = src.todoRender.prepare(src.todoSaver.$getTodo());
     document.querySelector('#resps-host').innerHTML = renderResult.resps;
     document.querySelector('#form-host').innerHTML = renderResult.form;
-    state.s.tasks.forEach(function (t) {
-        try {
-            document.querySelector('#task-' + t.id).onclick = function () {
-                state.s = app.appToTodo.fromTodo(todo.switchTasks(app.appToTodo.toTodo(state.s), [t.id]));
-                (0, exports.render)();
-            };
-        }
-        catch (e) { }
+    src.todoSaver.$getTodo().responsibles.forEach(function (r) {
+        r.tasks.forEach(function (t) {
+            try {
+                document.querySelector('#task-' + t.id).onclick = function () {
+                    src.todoSaver.$saveTodo(src.todoDomain.switchTasks(src.todoSaver.$getTodo(), [t.id]));
+                    (0, exports.render)();
+                };
+            }
+            catch (e) { }
+        });
     });
     try {
         document.querySelector("#submit-btn").onclick = function () {
+            var todoVal1 = src.todoSaver.$getTodo();
             var formVal = document.getElementById('form-input').value;
             if (!!formVal) {
-                state.s.form.name = formVal;
+                var resId = src.todoSaver.$getTodo().form.responsibleId;
+                src.todoSaver.$saveTodo(src.todoDomain.withFormData(src.todoSaver.$getTodo(), formVal, resId));
             }
-            state.s = app.appToTodo.fromTodo(todo.applyForm(app.appToTodo.toTodo(state.s)));
+            var todoVal2 = (!!formVal)
+                ? src.todoDomain.withFormData(src.todoSaver.$getTodo(), formVal, todoVal1.form.responsibleId)
+                : todoVal1;
+            var todoVal3 = src.todoDomain.applyForm(todoVal2);
+            src.todoSaver.$saveTodo(todoVal3);
             (0, exports.render)();
         };
     }
@@ -2684,4 +2706,4 @@ var render = function () {
 exports.render = render;
 (0, exports.render)();
 
-},{"../app":3,"../todo-domain":9}]},{},[]);
+},{"../src":7}]},{},[]);

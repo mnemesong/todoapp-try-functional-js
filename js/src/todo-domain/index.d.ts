@@ -8,3 +8,5 @@ export type T = {
 };
 export declare function applyForm(t: T): T;
 export declare const switchTasks: (t: T, taskIds: string[]) => T;
+export declare const withFormData: (t: T, name: string, resId: string) => T;
+export declare const init: () => T;

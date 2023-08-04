@@ -39,7 +39,7 @@ var assert = __importStar(require("assert"));
                 isReady: false,
                 name: "Sense Chi"
             });
-            assert.deepStrictEqual(src.todo.resp.task.switchTask(task), nominal);
+            assert.deepStrictEqual(src.todoDomain.resp.task.switchTask(task), nominal);
         });
     });
 });

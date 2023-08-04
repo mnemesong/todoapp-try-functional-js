@@ -23,7 +23,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.todoSaver = exports.todoRender = exports.todoDomain = void 0;
-exports.todoDomain = __importStar(require("./todo-domain"));
-exports.todoRender = __importStar(require("./$todo-render"));
-exports.todoSaver = __importStar(require("./$todo-saver"));
+exports.prepare = exports.widgets = void 0;
+exports.widgets = __importStar(require("./widgets"));
+var widgets = __importStar(require("./widgets"));
+var prepare = function (t) { return ({
+    resps: t.responsibles.map(function (r) { return widgets.resp.render(r, r.tasks.map(function (t) { return widgets.task.render(t); }).join('')); }).join(''),
+    form: widgets.form.render(t.form),
+}); };
+exports.prepare = prepare;

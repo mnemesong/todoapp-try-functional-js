@@ -8,7 +8,7 @@ describe("todo-domain.resp.test", () =>
     {
         it("test 1", () =>
         {
-            const resp: src.todo.resp.T = ({
+            const resp: src.todoDomain.resp.T = ({
                 id: "s9dasjd0",
                 name: "Willey",
                 tasks: [{
@@ -17,7 +17,7 @@ describe("todo-domain.resp.test", () =>
                     name: "Sense Chi"
                 }]
             })
-            const nominal: src.todo.resp.T = ({
+            const nominal: src.todoDomain.resp.T = ({
                 id: "s9dasjd0",
                 name: "Willey",
                 tasks: [{
@@ -27,7 +27,7 @@ describe("todo-domain.resp.test", () =>
                 }]
             })
             assert.deepStrictEqual(
-                src.todo.resp.switchManyTasks(resp, ["sadasd"]), 
+                src.todoDomain.resp.switchManyTasks(resp, ["sadasd"]), 
                 nominal
             )
         })

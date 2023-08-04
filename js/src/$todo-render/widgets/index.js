@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.todoSaver = exports.todoRender = exports.todoDomain = void 0;
-exports.todoDomain = __importStar(require("./todo-domain"));
-exports.todoRender = __importStar(require("./$todo-render"));
-exports.todoSaver = __importStar(require("./$todo-saver"));
+exports.task = exports.resp = exports.form = void 0;
+exports.form = __importStar(require("./form-widget"));
+exports.resp = __importStar(require("./resp-widget"));
+exports.task = __importStar(require("./task-widget"));

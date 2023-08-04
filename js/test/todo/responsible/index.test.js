@@ -47,7 +47,7 @@ var assert = __importStar(require("assert"));
                         name: "Sense Chi"
                     }]
             });
-            assert.deepStrictEqual(src.todo.resp.switchManyTasks(resp, ["sadasd"]), nominal);
+            assert.deepStrictEqual(src.todoDomain.resp.switchManyTasks(resp, ["sadasd"]), nominal);
         });
     });
 });

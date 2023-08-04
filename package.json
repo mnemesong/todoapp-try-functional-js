@@ -6,7 +6,7 @@
   "scripts": {
     "build:compile": "tsc",
     "build:test": "tsc && mocha ./js/test/**/*.js",
-    "build:browserify": "tsc && browserify -r ./js/src/prod-reliz/index.js:run > resources/bundle.js"
+    "build:browserify": "tsc && browserify -r ./js/prod/index.js:run > resources/bundle.js"
   },
   "keywords": [
     "urals",
