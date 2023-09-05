@@ -1,6 +1,6 @@
 import * as src from "../functions"
 
-export const config: src.appConfig.T = {
+export const config: src.htmlConfig.page.T = {
     formWidget: {
         formWidget: {
             template:  `

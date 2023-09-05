@@ -93,7 +93,7 @@ var rerender = function () {
 };
 rerender();
 
-},{"../data":5,"../functions":14,"./browser":1,"./state":3}],3:[function(require,module,exports){
+},{"../data":5,"../functions":18,"./browser":1,"./state":3}],3:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -167,7 +167,7 @@ var handleCommand = function (c, state) {
 };
 exports.handleCommand = handleCommand;
 
-},{"../data":5,"../functions":14}],4:[function(require,module,exports){
+},{"../data":5,"../functions":18}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.config = void 0;
@@ -280,10 +280,6 @@ exports.init = {
 
 },{}],7:[function(require,module,exports){
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-
-},{}],8:[function(require,module,exports){
-"use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -309,7 +305,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBrowser = exports.addCommandsAndEvents = void 0;
-var widgets = __importStar(require("./widgets"));
+var htmlConfig = __importStar(require("./html-config"));
 var deepEqual = __importStar(require("deep-equal"));
 var templateProto = __importStar(require("../template-protocol"));
 var addCommandsAndEvents = function (t, commands, events) { return ({
@@ -323,7 +319,7 @@ var updateBrowser = function (state1, state2, appConfig) {
         result = (0, exports.addCommandsAndEvents)(result, [{
                 command: 'innerHtml',
                 selector: appConfig.formsRootSelector,
-                content: widgets.form.renderContent(state2.form, appConfig.formWidget)
+                content: htmlConfig.form.renderContent(state2.form, appConfig.formWidget)
             }], [
             {
                 selector: appConfig.formWidget.btnSelector,
@@ -344,7 +340,7 @@ var updateBrowser = function (state1, state2, appConfig) {
         result = (0, exports.addCommandsAndEvents)(result, [{
                 command: "innerHtml",
                 selector: appConfig.respsRootSelector,
-                content: state2.responsibles.map(function (r) { return widgets.resp
+                content: state2.responsibles.map(function (r) { return htmlConfig.resp
                     .renderContent(r, appConfig.respWidget); })
                     .join('')
             }], state2.responsibles.reduce(function (acc, respEl) {
@@ -364,7 +360,7 @@ var updateBrowser = function (state1, state2, appConfig) {
 };
 exports.updateBrowser = updateBrowser;
 
-},{"../template-protocol":19,"./widgets":16,"deep-equal":25}],9:[function(require,module,exports){
+},{"../template-protocol":19,"./html-config":14,"deep-equal":25}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.construct = exports.clone = void 0;
@@ -373,7 +369,7 @@ exports.clone = clone;
 var construct = function (defResId) { return ({ name: "", responsibleId: defResId }); };
 exports.construct = construct;
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -405,7 +401,7 @@ exports.page = __importStar(require("./page"));
 exports.resp = __importStar(require("./responsible"));
 exports.task = __importStar(require("./task"));
 
-},{"./form":9,"./page":11,"./responsible":12,"./task":13}],11:[function(require,module,exports){
+},{"./form":8,"./page":10,"./responsible":11,"./task":12}],10:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -468,7 +464,7 @@ var withFormData = function (t, name, resId) { return ({
 }); };
 exports.withFormData = withFormData;
 
-},{"./form":9,"./responsible":12,"uuid":79}],12:[function(require,module,exports){
+},{"./form":8,"./responsible":11,"uuid":79}],11:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -535,7 +531,7 @@ var switchManyTasks = function (t, taskIds) { return taskIds
     .reduce(function (acc, tId) { return (0, exports.switchTask)(t, tId); }, t); };
 exports.switchManyTasks = switchManyTasks;
 
-},{"./task":13}],13:[function(require,module,exports){
+},{"./task":12}],12:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -565,39 +561,7 @@ var switchTask = function (t) { return ({
 }); };
 exports.switchTask = switchTask;
 
-},{}],14:[function(require,module,exports){
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.browserUpdate = exports.appConfig = exports.widgets = exports.domain = void 0;
-exports.domain = __importStar(require("./domain"));
-exports.widgets = __importStar(require("./widgets"));
-exports.appConfig = __importStar(require("./app-config"));
-exports.browserUpdate = __importStar(require("./broswer-update"));
-
-},{"./app-config":7,"./broswer-update":8,"./domain":10,"./widgets":16}],15:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -630,7 +594,7 @@ var renderContent = function (val, widget) { return template.render(widget.formW
 }); };
 exports.renderContent = renderContent;
 
-},{"../../template-protocol":19}],16:[function(require,module,exports){
+},{"../../template-protocol":19}],14:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -656,12 +620,17 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.task = exports.resp = exports.form = void 0;
-exports.form = __importStar(require("./form-widget"));
-exports.resp = __importStar(require("./resp-widget"));
-exports.task = __importStar(require("./task-widget"));
+exports.task = exports.resp = exports.page = exports.form = void 0;
+exports.form = __importStar(require("./form"));
+exports.page = __importStar(require("./page"));
+exports.resp = __importStar(require("./resp"));
+exports.task = __importStar(require("./task"));
 
-},{"./form-widget":15,"./resp-widget":17,"./task-widget":18}],17:[function(require,module,exports){
+},{"./form":13,"./page":15,"./resp":16,"./task":17}],15:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+
+},{}],16:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -689,7 +658,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderSelector = exports.renderContent = void 0;
 var template = __importStar(require("../../template-protocol"));
-var taskWidget = __importStar(require("./task-widget"));
+var taskWidget = __importStar(require("./task"));
 var renderContent = function (val, widget) { return template.render(widget.resp, {
     id: val.id,
     name: val.name,
@@ -701,7 +670,7 @@ exports.renderContent = renderContent;
 var renderSelector = function (selector, val) { return template.render(selector, { id: val.id }); };
 exports.renderSelector = renderSelector;
 
-},{"../../template-protocol":19,"./task-widget":18}],18:[function(require,module,exports){
+},{"../../template-protocol":19,"./task":17}],17:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -739,7 +708,38 @@ exports.renderContent = renderContent;
 var renderSelector = function (selector, val) { return template.render(selector, { 'id': val.id }); };
 exports.renderSelector = renderSelector;
 
-},{"../../template-protocol":19}],19:[function(require,module,exports){
+},{"../../template-protocol":19}],18:[function(require,module,exports){
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.htmlConfig = exports.browserUpdate = exports.domain = void 0;
+exports.domain = __importStar(require("./domain"));
+exports.browserUpdate = __importStar(require("./broswer-update"));
+exports.htmlConfig = __importStar(require("./html-config"));
+
+},{"./broswer-update":7,"./domain":9,"./html-config":14}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.render = void 0;

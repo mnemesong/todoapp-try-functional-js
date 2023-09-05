@@ -1,7 +1,6 @@
 import * as domain from "./domain"
 import * as browserProto from "../browser-protocol"
-import * as appConfig from "./app-config"
-import * as widgets from "./widgets"
+import * as htmlConfig from "./html-config"
 import * as deepEqual from "deep-equal"
 import * as templateProto from "../template-protocol"
 import * as stateProto from "../state-protocol"
@@ -23,14 +22,14 @@ export const addCommandsAndEvents = (
 export const updateBrowser = (
     state1: domain.page.T, 
     state2: domain.page.T,
-    appConfig: appConfig.T
+    appConfig: htmlConfig.page.T
 ): T => {
     let result: T = {rerenderCommands: [], setEventCommands: []}
     if(!deepEqual.default(state1.form, state2.form)) {
         result = addCommandsAndEvents(result, [{
             command: 'innerHtml',
             selector: appConfig.formsRootSelector,
-            content: widgets.form.renderContent(state2.form, appConfig.formWidget)
+            content: htmlConfig.form.renderContent(state2.form, appConfig.formWidget)
         }], [
             {
                 selector: appConfig.formWidget.btnSelector,
@@ -51,7 +50,7 @@ export const updateBrowser = (
         result = addCommandsAndEvents(result, [{
             command: "innerHtml",
             selector: appConfig.respsRootSelector,
-            content: state2.responsibles.map(r => widgets.resp
+            content: state2.responsibles.map(r => htmlConfig.resp
                 .renderContent(r, appConfig.respWidget))
                 .join('')
         }], state2.responsibles.reduce(

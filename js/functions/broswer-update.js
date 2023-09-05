@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBrowser = exports.addCommandsAndEvents = void 0;
-var widgets = __importStar(require("./widgets"));
+var htmlConfig = __importStar(require("./html-config"));
 var deepEqual = __importStar(require("deep-equal"));
 var templateProto = __importStar(require("../template-protocol"));
 var addCommandsAndEvents = function (t, commands, events) { return ({
@@ -38,7 +38,7 @@ var updateBrowser = function (state1, state2, appConfig) {
         result = (0, exports.addCommandsAndEvents)(result, [{
                 command: 'innerHtml',
                 selector: appConfig.formsRootSelector,
-                content: widgets.form.renderContent(state2.form, appConfig.formWidget)
+                content: htmlConfig.form.renderContent(state2.form, appConfig.formWidget)
             }], [
             {
                 selector: appConfig.formWidget.btnSelector,
@@ -59,7 +59,7 @@ var updateBrowser = function (state1, state2, appConfig) {
         result = (0, exports.addCommandsAndEvents)(result, [{
                 command: "innerHtml",
                 selector: appConfig.respsRootSelector,
-                content: state2.responsibles.map(function (r) { return widgets.resp
+                content: state2.responsibles.map(function (r) { return htmlConfig.resp
                     .renderContent(r, appConfig.respWidget); })
                     .join('')
             }], state2.responsibles.reduce(function (acc, respEl) {

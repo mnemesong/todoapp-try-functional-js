@@ -1,6 +1,6 @@
 import * as template from "../../template-protocol"
 import * as domain from "../domain/page"
-import * as taskWidget from "./task-widget"
+import * as taskWidget from "./task"
 
 export type T = {
     resp: template.T<'id'|'name'|'tasks'>,

@@ -23,7 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.task = exports.resp = exports.form = void 0;
-exports.form = __importStar(require("./form-widget"));
-exports.resp = __importStar(require("./resp-widget"));
-exports.task = __importStar(require("./task-widget"));
+exports.task = exports.resp = exports.page = exports.form = void 0;
+exports.form = __importStar(require("./form"));
+exports.page = __importStar(require("./page"));
+exports.resp = __importStar(require("./resp"));
+exports.task = __importStar(require("./task"));
