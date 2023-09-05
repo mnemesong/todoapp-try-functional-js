@@ -8,11 +8,13 @@ export const handleSetEventCommand = (
 ): void => {
     try{
         const el = document.querySelector(com.selector) as HTMLElement
-        const event = () => com.commands.forEach(c => {
-            stateEngine.setNewPage(
-                stateEngine.handleCommand(c, stateEngine.getNewPage()))
+        const event = () => {
+            com.commands.forEach(c => {
+                stateEngine.setNewPage(
+                    stateEngine.handleCommand(c, stateEngine.getNewPage()))
+            })
             rerender()
-        })
+        }
         if(com.event === 'click') { 
             el.onclick = event 
             console.log("set event onclick on " + com.selector)
