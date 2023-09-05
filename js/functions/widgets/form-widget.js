@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderContent = void 0;
-var template = __importStar(require("../template/template"));
+var template = __importStar(require("../../template-engine"));
 var renderContent = function (val, widget) { return template.render(widget.formWidget, {
     formName: val.name,
 }); };

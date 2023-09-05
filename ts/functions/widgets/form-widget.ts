@@ -1,6 +1,5 @@
-import * as template from "../template/template"
+import * as template from "../../template-engine"
 import * as domain from "../domain/page"
-import * as taskWidget from "./task-widget"
 
 export type T = {
     formWidget: template.T<'formName'>,

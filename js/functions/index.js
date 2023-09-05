@@ -23,11 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.browserUpdate = exports.appConfig = exports.widgets = exports.template = exports.domain = exports.commands = exports.browserCommands = void 0;
+exports.browserUpdate = exports.appConfig = exports.widgets = exports.domain = exports.commands = exports.browserCommands = void 0;
 exports.browserCommands = __importStar(require("./browser-commands"));
 exports.commands = __importStar(require("./commands"));
 exports.domain = __importStar(require("./domain"));
-exports.template = __importStar(require("./template"));
 exports.widgets = __importStar(require("./widgets"));
 exports.appConfig = __importStar(require("./app-config"));
 exports.browserUpdate = __importStar(require("./broswer-update"));

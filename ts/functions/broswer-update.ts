@@ -3,8 +3,7 @@ import * as browser from "./browser-commands"
 import * as appConfig from "./app-config"
 import * as widgets from "./widgets"
 import * as deepEqual from "deep-equal"
-import * as commands from "./commands"
-import * as template from "./template"
+import * as template from "../template-engine"
 
 export type T = {
     rerenderCommands: browser.rerender.T[],
@@ -58,8 +57,7 @@ export const updateBrowser = (
             (acc: {id: string, sel: string}[], respEl) => {
                 return acc.concat(respEl.tasks.map(t => ({
                     id: t.id, 
-                    sel: template
-                        .template.render(
+                    sel: template.render(
                             appConfig.respWidget.taskWidget.onclickSelector, {
                             id: t.id
                         })}))

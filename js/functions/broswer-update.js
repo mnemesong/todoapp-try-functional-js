@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateBrowser = exports.addCommandsAndEvents = void 0;
 var widgets = __importStar(require("./widgets"));
 var deepEqual = __importStar(require("deep-equal"));
-var template = __importStar(require("./template"));
+var template = __importStar(require("../template-engine"));
 var addCommandsAndEvents = function (t, commands, events) { return ({
     rerenderCommands: t.rerenderCommands.concat(commands),
     setEventCommands: t.setEventCommands.concat(events),
@@ -65,8 +65,7 @@ var updateBrowser = function (state1, state2, appConfig) {
             }], state2.responsibles.reduce(function (acc, respEl) {
             return acc.concat(respEl.tasks.map(function (t) { return ({
                 id: t.id,
-                sel: template
-                    .template.render(appConfig.respWidget.taskWidget.onclickSelector, {
+                sel: template.render(appConfig.respWidget.taskWidget.onclickSelector, {
                     id: t.id
                 })
             }); }));
