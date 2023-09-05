@@ -23,9 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.browserUpdate = exports.appConfig = exports.widgets = exports.domain = exports.commands = exports.browserCommands = void 0;
-exports.browserCommands = __importStar(require("./browser-commands"));
-exports.commands = __importStar(require("./commands"));
+exports.browserUpdate = exports.appConfig = exports.widgets = exports.domain = void 0;
 exports.domain = __importStar(require("./domain"));
 exports.widgets = __importStar(require("./widgets"));
 exports.appConfig = __importStar(require("./app-config"));

@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderSelector = exports.renderContent = void 0;
-var template = __importStar(require("../../template-engine"));
+var template = __importStar(require("../../template-protocol"));
 var taskWidget = __importStar(require("./task-widget"));
 var renderContent = function (val, widget) { return template.render(widget.resp, {
     id: val.id,

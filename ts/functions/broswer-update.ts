@@ -1,19 +1,20 @@
 import * as domain from "./domain"
-import * as browser from "./browser-commands"
+import * as browserProto from "../browser-protocol"
 import * as appConfig from "./app-config"
 import * as widgets from "./widgets"
 import * as deepEqual from "deep-equal"
-import * as template from "../template-engine"
+import * as templateProto from "../template-protocol"
+import * as stateProto from "../state-protocol"
 
 export type T = {
-    rerenderCommands: browser.rerender.T[],
-    setEventCommands: browser.setEvent.T[]
+    rerenderCommands: browserProto.rerender.T[],
+    setEventCommands: browserProto.setEvent.T<stateProto.T>[]
 }
 
 export const addCommandsAndEvents = (
     t: T, 
-    commands: browser.rerender.T[],
-    events: browser.setEvent.T[]
+    commands: browserProto.rerender.T[],
+    events: browserProto.setEvent.T<stateProto.T>[]
 ): T => ({
     rerenderCommands: t.rerenderCommands.concat(commands),
     setEventCommands: t.setEventCommands.concat(events),
@@ -57,7 +58,7 @@ export const updateBrowser = (
             (acc: {id: string, sel: string}[], respEl) => {
                 return acc.concat(respEl.tasks.map(t => ({
                     id: t.id, 
-                    sel: template.render(
+                    sel: templateProto.render(
                             appConfig.respWidget.taskWidget.onclickSelector, {
                             id: t.id
                         })}))

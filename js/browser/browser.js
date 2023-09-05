@@ -23,28 +23,31 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleCommand = void 0;
-var data = __importStar(require("../data"));
-var src = __importStar(require("../functions"));
-var handleCommand = function (c, state) {
-    if (c.com === 'add-task') {
-        var result = src.domain.page.applyForm(state);
-        if (result['error']) {
-            console.log("Ошибка: " + result['error']);
-            return state;
+exports.handleRerenderCommand = exports.handleSetEventCommand = void 0;
+var stateEngine = __importStar(require("./state"));
+var handleSetEventCommand = function (com, rerender) {
+    try {
+        var el = document.querySelector(com.selector);
+        var event_1 = function () { return com.commands.forEach(function (c) {
+            stateEngine.setNewPage(stateEngine.handleCommand(c, stateEngine.getNewPage()));
+            rerender();
+        }); };
+        if (com.event === 'click') {
+            el.onclick = event_1;
+            console.log("set event onclick on " + com.selector);
         }
-        return result;
-    }
-    if (c.com === 'change-form') {
-        var formInput = document.querySelector(data.appConfig.config.formWidget.inputSelector);
-        if (formInput instanceof HTMLInputElement) {
-            return src.domain.page
-                .withFormData(state, formInput.value, state.form.responsibleId);
+        if (com.event === 'change') {
+            el.onchange = event_1;
+            console.log("set event onchange on " + com.selector);
         }
-        return state;
     }
-    if (c.com === 'switch-task-check') {
-        return src.domain.page.switchTasks(state, [c.id]);
+    catch (e) {
+        throw new Error("Error at executing command: " + JSON.stringify(com)
+            + ": " + e);
     }
 };
-exports.handleCommand = handleCommand;
+exports.handleSetEventCommand = handleSetEventCommand;
+var handleRerenderCommand = function (com) {
+    document.querySelector(com.selector).innerHTML = com.content;
+};
+exports.handleRerenderCommand = handleRerenderCommand;

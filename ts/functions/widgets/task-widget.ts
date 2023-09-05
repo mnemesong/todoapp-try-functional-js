@@ -1,4 +1,4 @@
-import * as template from "../../template-engine"
+import * as template from "../../template-protocol"
 import * as domain from "../domain/page"
 
 export type T = {
