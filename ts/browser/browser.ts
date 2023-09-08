@@ -1,6 +1,22 @@
 import * as stateEngine from "./state"
 import * as browserProto from "../browser-protocol"
 import * as stateProto from "../state-protocol"
+import * as src from "../functions"
+import * as queriableProto from "../queriable-protocol"
+import * as data from "../data"
+
+const browserFormValHandler: queriableProto.queryHabdler.T<
+    {changeFormVal: string}, 
+    'change-form-val',
+    string
+> = (queryConfig: 'change-form-val') => {
+    const formInput = document
+        .querySelector(data.appConfig.config.formWidget.inputSelector)
+    if(!(formInput instanceof HTMLInputElement)) {
+        return {exception: "can not found formInput as HTMLInputElement"}
+    }
+    return {result: {changeFormVal: formInput.value}, query: 'change-form-val'}
+}
 
 export const handleSetEventCommand = (
     com:browserProto.setEvent.T<stateProto.T>,
@@ -10,8 +26,16 @@ export const handleSetEventCommand = (
         const el = document.querySelector(com.selector) as HTMLElement
         const event = () => {
             com.commands.forEach(c => {
-                stateEngine.setNewPage(
-                    stateEngine.handleCommand(c, stateEngine.getNewPage()))
+                const result = queriableProto.queriable.call(
+                    src.domain.page.handleCommand, {
+                        c: c,
+                        state: stateEngine.getNewPage()
+                    }, browserFormValHandler
+                )
+                if(result['exception']) {
+                    throw new Error(result['exception'])
+                }
+                stateEngine.setNewPage((result as {result: src.domain.page.T}).result)
             })
             rerender()
         }

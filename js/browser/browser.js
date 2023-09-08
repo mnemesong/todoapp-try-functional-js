@@ -25,13 +25,33 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleRerenderCommand = exports.handleSetEventCommand = void 0;
 var stateEngine = __importStar(require("./state"));
+var src = __importStar(require("../functions"));
+var queriableProto = __importStar(require("../queriable-protocol"));
+var data = __importStar(require("../data"));
+var browserFormValHandler = function (queryConfig) {
+    var formInput = document
+        .querySelector(data.appConfig.config.formWidget.inputSelector);
+    if (!(formInput instanceof HTMLInputElement)) {
+        return { exception: "can not found formInput as HTMLInputElement" };
+    }
+    return { result: { changeFormVal: formInput.value }, query: 'change-form-val' };
+};
 var handleSetEventCommand = function (com, rerender) {
     try {
         var el = document.querySelector(com.selector);
-        var event_1 = function () { return com.commands.forEach(function (c) {
-            stateEngine.setNewPage(stateEngine.handleCommand(c, stateEngine.getNewPage()));
+        var event_1 = function () {
+            com.commands.forEach(function (c) {
+                var result = queriableProto.queriable.call(src.domain.page.handleCommand, {
+                    c: c,
+                    state: stateEngine.getNewPage()
+                }, browserFormValHandler);
+                if (result['exception']) {
+                    throw new Error(result['exception']);
+                }
+                stateEngine.setNewPage(result.result);
+            });
             rerender();
-        }); };
+        };
         if (com.event === 'click') {
             el.onclick = event_1;
             console.log("set event onclick on " + com.selector);

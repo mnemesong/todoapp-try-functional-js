@@ -23,27 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePage = exports.setNewPage = exports.getNewPage = exports.getOldPage = void 0;
-var data = __importStar(require("../data"));
-var state = {
-    oldPage: {
-        form: {
-            responsibleId: "",
-            name: ""
-        },
-        responsibles: []
-    },
-    newPage: data.page.init
-};
-var getOldPage = function () { return state.oldPage; };
-exports.getOldPage = getOldPage;
-var getNewPage = function () { return state.newPage; };
-exports.getNewPage = getNewPage;
-var setNewPage = function (p) {
-    state.newPage = p;
-};
-exports.setNewPage = setNewPage;
-var updatePage = function () {
-    state.oldPage = state.newPage;
-};
-exports.updatePage = updatePage;
+exports.queryHabdler = exports.queryResult = exports.queriable = void 0;
+exports.queriable = __importStar(require("./queriable"));
+exports.queryResult = __importStar(require("./query-result"));
+exports.queryHabdler = __importStar(require("./query-handler"));
