@@ -23,8 +23,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commands = exports.htmlConfig = exports.browserUpdate = exports.domain = void 0;
-exports.domain = __importStar(require("./domain"));
-exports.browserUpdate = __importStar(require("./broswer-update"));
-exports.htmlConfig = __importStar(require("./html-config"));
-exports.commands = __importStar(require("./commands"));
+exports.handle = void 0;
+var domain = __importStar(require("./domain"));
+var handle = function (param, query) {
+    if (param.c.com === 'add-task') {
+        var result = domain.page.applyForm(param.state);
+        if (result['error']) {
+            console.log("Ошибка: " + result['error']);
+            return { result: param.state };
+        }
+        return { result: result };
+    }
+    if (param.c.com === 'change-form') {
+        if (query) {
+            return { result: domain.page.withFormData(param.state, query.result.changeFormVal, param.state.form.responsibleId) };
+        }
+        return { query: 'change-form-val' };
+    }
+    if (param.c.com === 'switch-task-check') {
+        return { result: domain.page.switchTasks(param.state, [param.c.id]) };
+    }
+};
+exports.handle = handle;

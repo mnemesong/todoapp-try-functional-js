@@ -41,7 +41,7 @@ var handleSetEventCommand = function (com, rerender) {
         var el = document.querySelector(com.selector);
         var event_1 = function () {
             com.commands.forEach(function (c) {
-                var result = queriableProto.queriable.call(src.domain.page.handleCommand, {
+                var result = queriableProto.queriable.call(src.commands.handle, {
                     c: c,
                     state: stateEngine.getNewPage()
                 }, browserFormValHandler);

@@ -1,6 +1,5 @@
 import * as data from "../data"
 import * as src from "../functions"
-import * as stateProto from "../state-protocol"
 
 const state: {
     oldPage: src.domain.page.T,

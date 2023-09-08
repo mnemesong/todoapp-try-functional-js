@@ -3,17 +3,17 @@ import * as browserProto from "../browser-protocol"
 import * as htmlConfig from "./html-config"
 import * as deepEqual from "deep-equal"
 import * as templateProto from "../template-protocol"
-import * as stateProto from "../state-protocol"
+import * as command from "./commands"
 
 export type T = {
     rerenderCommands: browserProto.rerender.T[],
-    setEventCommands: browserProto.setEvent.T<stateProto.T>[]
+    setEventCommands: browserProto.setEvent.T<command.T>[]
 }
 
 export const addCommandsAndEvents = (
     t: T, 
     commands: browserProto.rerender.T[],
-    events: browserProto.setEvent.T<stateProto.T>[]
+    events: browserProto.setEvent.T<command.T>[]
 ): T => ({
     rerenderCommands: t.rerenderCommands.concat(commands),
     setEventCommands: t.setEventCommands.concat(events),

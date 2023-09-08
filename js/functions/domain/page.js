@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handleCommand = exports.withFormData = exports.switchTasks = exports.applyForm = exports.form = exports.resp = void 0;
+exports.withFormData = exports.switchTasks = exports.applyForm = exports.form = exports.resp = void 0;
 var formR = __importStar(require("./form"));
 var responsibleR = __importStar(require("./responsible"));
 var uuid_1 = require("uuid");
@@ -59,23 +59,3 @@ var withFormData = function (t, name, resId) { return ({
     form: { name: name, responsibleId: resId }
 }); };
 exports.withFormData = withFormData;
-var handleCommand = function (param, query) {
-    if (param.c.com === 'add-task') {
-        var result = applyForm(param.state);
-        if (result['error']) {
-            console.log("Ошибка: " + result['error']);
-            return { result: param.state };
-        }
-        return { result: result };
-    }
-    if (param.c.com === 'change-form') {
-        if (query) {
-            return { result: (0, exports.withFormData)(param.state, query.result.changeFormVal, param.state.form.responsibleId) };
-        }
-        return { query: 'change-form-val' };
-    }
-    if (param.c.com === 'switch-task-check') {
-        return { result: (0, exports.switchTasks)(param.state, [param.c.id]) };
-    }
-};
-exports.handleCommand = handleCommand;

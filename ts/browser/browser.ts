@@ -1,6 +1,5 @@
 import * as stateEngine from "./state"
 import * as browserProto from "../browser-protocol"
-import * as stateProto from "../state-protocol"
 import * as src from "../functions"
 import * as queriableProto from "../queriable-protocol"
 import * as data from "../data"
@@ -19,7 +18,7 @@ const browserFormValHandler: queriableProto.queryHabdler.T<
 }
 
 export const handleSetEventCommand = (
-    com:browserProto.setEvent.T<stateProto.T>,
+    com:browserProto.setEvent.T<src.commands.T>,
     rerender: () => void
 ): void => {
     try{
@@ -27,7 +26,7 @@ export const handleSetEventCommand = (
         const event = () => {
             com.commands.forEach(c => {
                 const result = queriableProto.queriable.call(
-                    src.domain.page.handleCommand, {
+                    src.commands.handle, {
                         c: c,
                         state: stateEngine.getNewPage()
                     }, browserFormValHandler
